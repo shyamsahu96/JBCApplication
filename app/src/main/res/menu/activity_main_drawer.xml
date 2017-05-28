@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_questions"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Questions" />
+        <item
+            android:id="@+id/nav_notices"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Notices" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Report a Bug" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Logout" />
+    </group>
+
+
+</menu>

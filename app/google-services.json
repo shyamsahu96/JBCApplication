@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "389580507195",
+    "firebase_url": "https://jbcapplication.firebaseio.com",
+    "project_id": "jbcapplication",
+    "storage_bucket": "jbcapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389580507195:android:f18581e548b894bd",
+        "android_client_info": {
+          "package_name": "citzen.jbc.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389580507195-8no6pkm1g6rt8l2vs3c9tf8m5dfkkdhe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "citzen.jbc.myapplication",
+            "certificate_hash": "b1b5d3ab3f05184a7cfabfd32b6689a434e52986"
+          }
+        },
+        {
+          "client_id": "389580507195-o91iru0m0s0q376558q4vjpp0ssbg8e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyS1yh7s54owuQlMwEnsu28YZXbyVyTzI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389580507195-o91iru0m0s0q376558q4vjpp0ssbg8e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

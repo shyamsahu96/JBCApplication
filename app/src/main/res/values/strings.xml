@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">JBC Application</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="log_out">Log Out</string>
+
+    <string-array name="subject_choice">
+        <item>Android</item>
+        <item>C</item>
+        <item>DSTC</item>
+        <item>C++</item>
+        <item>DBMS</item>
+        <item>Java</item>
+    </string-array>
+
+    <string name="your_question">Your Question goes here</string>
+
+    <string name="questionkey">questionKey</string>
+
+    <string name="questionsKey">questions</string>
+    <string name="repliesKey">replies</string>
+</resources>
