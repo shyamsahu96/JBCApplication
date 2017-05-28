@@ -23,7 +23,7 @@
         android:padding="@dimen/activity_horizontal_margin">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView"
+            android:id="@+id/profImageView"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center"

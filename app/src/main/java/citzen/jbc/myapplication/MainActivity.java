@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,12 +29,12 @@ public class MainActivity extends AppCompatActivity
     static int RC_CANCELLED_USER = 111;
 
     FirebaseAuth mFirebaseAuth;
+    FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthStateListener;
     String mName, mEmail;
-    @BindView(R.id.navName)
     TextView userName;
-    @BindView(R.id.navEmail)
     TextView userEmail;
+    CircleImageView userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragReplace, new HomeFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_home);
+
+        user = mFirebaseAuth.getCurrentUser();
+        View header=navigationView.getHeaderView(0);
+        userName=(TextView)header.findViewById(R.id.navName);
+        userEmail=(TextView)header.findViewById(R.id.navEmail);
+        userImage=(CircleImageView)header.findViewById(R.id.profImageView);
+        userName.setText(user.getDisplayName());
+        userEmail.setText(user.getEmail());
     }
 
     @Override
