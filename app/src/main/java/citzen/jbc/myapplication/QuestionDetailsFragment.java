@@ -1,5 +1,6 @@
 package citzen.jbc.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -118,6 +120,11 @@ public class QuestionDetailsFragment extends Fragment {
         }
         Replies userReply = new Replies("blank", user.getDisplayName(), answer);
         metAnswer.setText("");
+        View focusedView=mActivity.getCurrentFocus();
+        if (focusedView!=null){
+            InputMethodManager methodManager=(InputMethodManager)mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            methodManager.hideSoftInputFromWindow(focusedView.getWindowToken(),0);
+        }
         mRepliesReference.push().setValue(userReply).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
