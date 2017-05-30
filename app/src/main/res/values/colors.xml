@@ -5,4 +5,9 @@
     <color name="colorAccent">#FFAB40</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="textColorSecondary">#ffffff</color>
+
+
+    <color name="baseColgreen">#009787</color>
+    <color name="baseColback">#D3D3D3</color>
+    <color name="baseColblack">#000000</color>
 </resources>

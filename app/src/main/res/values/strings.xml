@@ -23,4 +23,13 @@
 
     <string name="questionsKey">questions</string>
     <string name="repliesKey">replies</string>
+
+    <integer-array name="home_images">
+        <item>@drawable/clanguage</item>
+        <item>@drawable/cplusplus</item>
+        <item>@drawable/javalang</item>
+        <item>@drawable/oracle</item>
+        <item>@drawable/androidimglow</item>
+        <item>@drawable/htmllow</item>
+    </integer-array>
 </resources>

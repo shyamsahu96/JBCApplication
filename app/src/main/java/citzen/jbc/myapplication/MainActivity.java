@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity
         userName=(TextView)header.findViewById(R.id.navName);
         userEmail=(TextView)header.findViewById(R.id.navEmail);
         userImage=(CircleImageView)header.findViewById(R.id.profImageView);
-        userName.setText(user.getDisplayName());
-        userEmail.setText(user.getEmail());
+        //userName.setText(user.getDisplayName());
+        //userEmail.setText(user.getEmail());
     }
 
     @Override
