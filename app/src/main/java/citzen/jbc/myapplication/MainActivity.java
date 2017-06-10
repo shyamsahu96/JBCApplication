@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import citzen.jbc.myapplication.exam.UploadToFB;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        userName = (TextView) header.findViewById(R.id.navName);
+        userEmail = (TextView) header.findViewById(R.id.navEmail);
+        userImage = (CircleImageView) header.findViewById(R.id.profImageView);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -51,27 +57,24 @@ public class MainActivity extends AppCompatActivity
                 if (user == null) {
                     Intent intent = new Intent(MainActivity.this, LogInActivity.class);
                     startActivityForResult(intent, RC_SIGN);
+                } else {
+                    userName.setText(user.getDisplayName());
+                    userEmail.setText(user.getEmail());
                 }
             }
         };
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragReplace, new HomeFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_home);
 
-        user = mFirebaseAuth.getCurrentUser();
-        View header=navigationView.getHeaderView(0);
-        userName=(TextView)header.findViewById(R.id.navName);
-        userEmail=(TextView)header.findViewById(R.id.navEmail);
-        userImage=(CircleImageView)header.findViewById(R.id.profImageView);
-        //userName.setText(user.getDisplayName());
-        //userEmail.setText(user.getEmail());
+
     }
 
     @Override
@@ -147,6 +150,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, UploadToFB.class));
 
         }
 

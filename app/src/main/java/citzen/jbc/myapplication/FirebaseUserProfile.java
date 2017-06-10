@@ -6,60 +6,80 @@ package citzen.jbc.myapplication;
 
 public class FirebaseUserProfile {
 
-    private String name;
-    private String email;
-    private String college;
-    private String password;
-    private String referKey;
+    public String name;
+    public String email;
+    public String college;
+    public String password;
+    public String referKey;
+    public int refPoints;
 
-    public FirebaseUserProfile(){
+    public FirebaseUserProfile() {
 
     }
 
-    FirebaseUserProfile(String name, String email, String college, String password,String referKey) {
+    public FirebaseUserProfile(String name, String email, String college, String password, String referKey) {
         this.name = name;
-        this.college=college;
-        this.email=email;
-        this.password=password;
-        this.referKey=referKey;
+        this.college = college;
+        this.email = email;
+        this.password = password;
+        this.referKey = referKey;
     }
 
-    public String getName(){
+
+    public FirebaseUserProfile(String name, String email, String college, String pass, String refKey, int refPoints) {
+        this.name = name;
+        this.college = college;
+        this.email = email;
+        this.password = pass;
+        this.referKey = refKey;
+        this.refPoints = refPoints;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public String getCollege(){
+    public String getCollege() {
         return college;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public String getReferKey(){
+    public String getReferKey() {
         return referKey;
     }
 
-    public void setName(String name){
-        this.name=name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setEmail(String email){
-        this.email=email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setCollege(String college){
-        this.college=college;
+    public void setCollege(String college) {
+        this.college = college;
     }
 
-    public void setPassword(String password){
-        this.password=password;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    public void setReferKey(String referKey){
-        this.referKey=referKey;
+
+    public void setReferKey(String referKey) {
+        this.referKey = referKey;
+    }
+
+    public int getRefPoints() {
+        return refPoints;
+    }
+
+    public void setRefPoints(int refPoints) {
+        this.refPoints = refPoints;
     }
 }

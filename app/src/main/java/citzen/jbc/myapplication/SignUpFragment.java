@@ -23,11 +23,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Random;
+import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +59,7 @@ public class SignUpFragment extends Fragment {
 
     String name, email, college, referid, pass, repass;
     String LOG_TAG = "SIGNUP";
+    boolean referred;
 
     View view;
     FragmentActivity mActivity;
@@ -62,6 +67,12 @@ public class SignUpFragment extends Fragment {
 
     FirebaseAuth mFirebaseAuth;
     FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mUsersReference;
+    ChildEventListener mUserListener;
+    Vector<FirebaseUserProfile> vUsers;
+    Vector<String> vKeys;
+    String referrerUserKey;
+    FirebaseUserProfile refferedUserProfile;
 
     @Nullable
     @Override
@@ -77,7 +88,53 @@ public class SignUpFragment extends Fragment {
         mActivity = getActivity();
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUsersReference = FirebaseDatabase.getInstance().getReference().child("users");
         mActivity.setResult(Activity.RESULT_CANCELED);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        vUsers = new Vector<>();
+        vKeys = new Vector<>();
+        if (mUserListener == null)
+            mUserListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    vUsers.add(dataSnapshot.getValue(FirebaseUserProfile.class));
+                    vKeys.add(dataSnapshot.getKey());
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e("Error", databaseError.getMessage());
+                }
+            };
+        mUsersReference.addChildEventListener(mUserListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mUsersReference != null) {
+            mUsersReference.removeEventListener(mUserListener);
+        }
     }
 
     @OnClick(R.id.btnSignUp)
@@ -89,6 +146,17 @@ public class SignUpFragment extends Fragment {
         referid = etreferid.getText().toString();
         pass = etpass.getText().toString();
         repass = etrepass.getText().toString();
+
+        for (int i = 0; i < vUsers.size(); i++) {
+            refferedUserProfile = vUsers.get(i);
+            String referKey = refferedUserProfile.getReferKey();
+            if (referKey.equals(referid)) {
+                referrerUserKey = vKeys.get(i);
+                //TO-DO add the point to the referrer
+                referred = true;
+                break;
+            }
+        }
 
         if (!etname.isCharactersCountValid()) {
             return;
@@ -140,15 +208,15 @@ public class SignUpFragment extends Fragment {
                     if (user != null) {
                         mUserUpdateDialog = ProgressDialog.show(mActivity, null, "Setting up Your Account", false, false);
                         user.updateProfile(mChangeRequest).
-                        addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                setUpUserDataBase(user);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
+                                addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        setUpUserDataBase(user);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(mActivity,"Failed to link users name with the account",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -171,16 +239,31 @@ public class SignUpFragment extends Fragment {
 
          */
 
-        String refKey = name.substring(0, 3) + new Random().nextInt(9999);
+        String refKey = name.substring(0, 3).trim() + new Random().nextInt(9999);
         Log.e("Referral key", refKey);
 
         DatabaseReference mUserRef = mFirebaseDatabase.getReference().child("users").child(user.getUid());
-        FirebaseUserProfile mProfile = new FirebaseUserProfile(name, email, college, pass, refKey);
+        FirebaseUserProfile mProfile = new FirebaseUserProfile(name, email, college, pass, refKey, referred ? 100 : 0);
         mUserRef.setValue(mProfile).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-           Toast.makeText(mActivity,"Failed upload users data",Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        if (referred) {
+            refferedUserProfile.setRefPoints(refferedUserProfile.getRefPoints() + 100);
+            mUsersReference.child(referrerUserKey).setValue(refferedUserProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(mActivity, "You and your friend " + refferedUserProfile.getName() + " each have been credited 100 points", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 }

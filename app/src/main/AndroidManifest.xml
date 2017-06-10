@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".LogInActivity" />
-        <activity android:name=".QuestionDetails"></activity>
+        <activity android:name=".QuestionDetails" />
+        <activity android:name=".ListingAct" />
+        <activity android:name=".DetailingAct" />
+        <activity android:name=".exam.UploadToFB"></activity>
     </application>
 
 </manifest>

@@ -42,7 +42,7 @@ public class SignInFragment extends Fragment {
     ProgressDialog mSignDialog;
 
     String email, pass;
-    final String LOG_TAG="SIGNIN FRAGMENT";
+    final String LOG_TAG = "SIGNIN FRAGMENT";
 
     @Nullable
     @Override
@@ -73,7 +73,7 @@ public class SignInFragment extends Fragment {
             return;
         }
 
-        mSignDialog=ProgressDialog.show(mActivity,null,"Signing In...",false,false);
+        mSignDialog = ProgressDialog.show(mActivity, null, "Signing In...", false, false);
 
         mFirebaseAuth.signInWithEmailAndPassword(email, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -87,8 +87,8 @@ public class SignInFragment extends Fragment {
             public void onFailure(@NonNull Exception e) {
                 mSignDialog.dismiss();
                 mActivity.setResult(Activity.RESULT_CANCELED);
-                Toast.makeText(mActivity,e.getMessage(),Toast.LENGTH_SHORT).show();
-                Log.e(LOG_TAG,e.getMessage());
+                Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(LOG_TAG, e.getMessage());
             }
         });
 

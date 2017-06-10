@@ -24,6 +24,9 @@
     <string name="questionsKey">questions</string>
     <string name="repliesKey">replies</string>
 
+    <string name="sharetrans">Shared</string>
+    <string name="userKey">users</string>
+
     <integer-array name="home_images">
         <item>@drawable/clanguage</item>
         <item>@drawable/cplusplus</item>
