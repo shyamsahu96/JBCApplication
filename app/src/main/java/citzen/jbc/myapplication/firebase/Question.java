@@ -1,4 +1,4 @@
-package citzen.jbc.myapplication;
+package citzen.jbc.myapplication.firebase;
 
 /**
  * Created by chinmoydash on 26/05/17.

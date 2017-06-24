@@ -36,6 +36,7 @@ import java.util.Vector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import citzen.jbc.myapplication.firebase.FirebaseUserProfile;
 
 /**
  * Created by shyam on 18-May-17.

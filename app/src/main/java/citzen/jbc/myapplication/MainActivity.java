@@ -1,6 +1,7 @@
 package citzen.jbc.myapplication;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +27,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int RC_PERMISSIONS = 123;
     int RC_SIGN = 123;
     static int RC_CANCELLED_USER = 111;
+    static boolean readPermission,writePermission;
 
     FirebaseAuth mFirebaseAuth;
     FirebaseUser user;
@@ -150,7 +154,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, UploadToFB.class));
+            mFirebaseAuth.signOut();
 
         }
 
@@ -173,5 +177,17 @@ public class MainActivity extends AppCompatActivity
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_PERMISSIONS && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.e("Allowed","true");
+                readPermission = true;
+                writePermission = true;
+            }
+            else
+                Log.e("Allowed","false");
+        }
+    }
 }

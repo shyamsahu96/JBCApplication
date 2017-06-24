@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import citzen.jbc.myapplication.firebase.Replies;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
