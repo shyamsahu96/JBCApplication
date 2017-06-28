@@ -28,6 +28,7 @@
 
     <string name="sharetrans">Shared</string>
     <string name="userKey">users</string>
+    <string name="examKey">exams</string>
 
     <integer-array name="home_images">
         <item>@drawable/clanguage</item>

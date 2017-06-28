@@ -1,4 +1,4 @@
-package citzen.jbc.myapplication;
+package citzen.jbc.myapplication.admin;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +21,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.ButterKnife;
+import citzen.jbc.myapplication.FeedBackFragment;
+import citzen.jbc.myapplication.admin.HomeFragment;
+import citzen.jbc.myapplication.LogInActivity;
+import citzen.jbc.myapplication.NoticeFragment;
+import citzen.jbc.myapplication.QuestionsFragment;
+import citzen.jbc.myapplication.R;
+import citzen.jbc.myapplication.ReportFragment;
 import citzen.jbc.myapplication.exam.ActivityMain;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,9 +35,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int RC_PERMISSIONS = 123;
+    int RC_SIGN = 123;
     static int RC_CANCELLED_USER = 111;
     static boolean readPermission, writePermission;
-    int RC_SIGN = 123;
+
     FirebaseAuth mFirebaseAuth;
     FirebaseUser user;
     FirebaseAuth.AuthStateListener mAuthStateListener;

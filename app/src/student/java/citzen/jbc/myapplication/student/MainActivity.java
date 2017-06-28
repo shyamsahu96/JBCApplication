@@ -1,4 +1,4 @@
-package citzen.jbc.myapplication;
+package citzen.jbc.myapplication.student;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.ButterKnife;
+import citzen.jbc.myapplication.FeedBackFragment;
+import citzen.jbc.myapplication.LogInActivity;
+import citzen.jbc.myapplication.NoticeFragment;
+import citzen.jbc.myapplication.QuestionsFragment;
+import citzen.jbc.myapplication.R;
+import citzen.jbc.myapplication.ReportFragment;
 import citzen.jbc.myapplication.exam.ActivityMain;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,9 +70,9 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);

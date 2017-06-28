@@ -1,8 +1,6 @@
-package citzen.jbc.myapplication;
+package citzen.jbc.myapplication.student;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,12 +36,10 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import citzen.jbc.myapplication.R;
 import citzen.jbc.myapplication.design.ThreeTwoPager;
 import citzen.jbc.myapplication.firebase.Recents;
 import id.zelory.compressor.Compressor;
-
-import static citzen.jbc.myapplication.MainActivity.readPermission;
-import static citzen.jbc.myapplication.MainActivity.writePermission;
 
 /**
  * Created by shyam on 18-May-17.
@@ -82,9 +77,6 @@ public class HomeFragment extends Fragment {
         mRecentsReference = mDatabase.getReference(getString(R.string.recentevent));
         mStorage = FirebaseStorage.getInstance();
         mRecentsPhotosReference = mStorage.getReference(getString(R.string.recentevent));
-        readPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        writePermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-
     }
 
     @Override
@@ -204,32 +196,6 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(mActivity, "Please select a image", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    /*@OnClick(R.id.addRecent)
-    void addRecent() {
-        if (!readPermission || !writePermission) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSIONS);
-        } else {
-            Intent pickerIntent = new Intent(Intent.ACTION_PICK);
-            pickerIntent.setType("image/*");
-            Intent chooseIntent = Intent.createChooser(pickerIntent, "Select Image");
-            chooseIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickerIntent});
-            startActivityForResult(chooseIntent, RC_CHOOSE);
-        }
-    }*/
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == RC_PERMISSIONS && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.e("Allowed", "true");
-                readPermission = true;
-                writePermission = true;
-            } else
-                Log.e("Allowed", "false");
-        }
-
     }
 
     class MyPagerAdapter extends FragmentStatePagerAdapter {

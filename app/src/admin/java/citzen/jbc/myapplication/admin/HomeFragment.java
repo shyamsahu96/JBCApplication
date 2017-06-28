@@ -1,4 +1,4 @@
-package citzen.jbc.myapplication;
+package citzen.jbc.myapplication.admin;
 
 import android.Manifest;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -39,12 +40,15 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import citzen.jbc.myapplication.R;
+import citzen.jbc.myapplication.admin.RecentEventsFragment;
 import citzen.jbc.myapplication.design.ThreeTwoPager;
 import citzen.jbc.myapplication.firebase.Recents;
 import id.zelory.compressor.Compressor;
 
-import static citzen.jbc.myapplication.MainActivity.readPermission;
-import static citzen.jbc.myapplication.MainActivity.writePermission;
+import static citzen.jbc.myapplication.admin.MainActivity.readPermission;
+import static citzen.jbc.myapplication.admin.MainActivity.writePermission;
 
 /**
  * Created by shyam on 18-May-17.
@@ -149,6 +153,56 @@ public class HomeFragment extends Fragment {
         keys.clear();
     }
 
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        ArrayList<RecentEventsFragment> fragments = new ArrayList<>();
+        ArrayList<String> message, photoLink;
+
+        MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Log.e("Adapter Position", String.valueOf(position));
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            Log.e("Adapter Size", String.valueOf(fragments.size()));
+            return fragments.size();
+        }
+
+        void addFragment(Recents recents) {
+            RecentEventsFragment fragment = new RecentEventsFragment();
+            Bundle args = new Bundle();
+            args.putString("message", recents.getMessage());
+            args.putString("photoLink", recents.getPhotoLink());
+            args.putString("dataKey", recents.getDataKey());
+            fragment.setArguments(args);
+            fragments.add(fragment);
+            Log.e("Fragment Added", "true");
+        }
+
+        void removeFragment(int position) {
+            fragments.remove(position);
+        }
+    }
+
+    @OnClick(R.id.addRecent)
+    void addRecent() {
+        if (!readPermission || !writePermission) {
+            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSIONS);
+        } else {
+            Intent pickerIntent = new Intent(Intent.ACTION_PICK);
+            pickerIntent.setType("image/*");
+            Intent chooseIntent = Intent.createChooser(pickerIntent, "Select Image");
+            chooseIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickerIntent});
+            startActivityForResult(chooseIntent, RC_CHOOSE);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -206,19 +260,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    /*@OnClick(R.id.addRecent)
-    void addRecent() {
-        if (!readPermission || !writePermission) {
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSIONS);
-        } else {
-            Intent pickerIntent = new Intent(Intent.ACTION_PICK);
-            pickerIntent.setType("image/*");
-            Intent chooseIntent = Intent.createChooser(pickerIntent, "Select Image");
-            chooseIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickerIntent});
-            startActivityForResult(chooseIntent, RC_CHOOSE);
-        }
-    }*/
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == RC_PERMISSIONS && grantResults.length > 0) {
@@ -230,42 +271,5 @@ public class HomeFragment extends Fragment {
                 Log.e("Allowed", "false");
         }
 
-    }
-
-    class MyPagerAdapter extends FragmentStatePagerAdapter {
-
-        ArrayList<RecentEventsFragment> fragments = new ArrayList<>();
-        ArrayList<String> message, photoLink;
-
-        MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Log.e("Adapter Position", String.valueOf(position));
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            Log.e("Adapter Size", String.valueOf(fragments.size()));
-            return fragments.size();
-        }
-
-        void addFragment(Recents recents) {
-            RecentEventsFragment fragment = new RecentEventsFragment();
-            Bundle args = new Bundle();
-            args.putString("message", recents.getMessage());
-            args.putString("photoLink", recents.getPhotoLink());
-            args.putString("dataKey", recents.getDataKey());
-            fragment.setArguments(args);
-            fragments.add(fragment);
-            Log.e("Fragment Added", "true");
-        }
-
-        void removeFragment(int position) {
-            fragments.remove(position);
-        }
     }
 }

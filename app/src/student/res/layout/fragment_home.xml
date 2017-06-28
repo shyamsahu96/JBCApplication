@@ -315,18 +315,6 @@
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                             android:textColor="@android:color/white" />
 
-                        <!--<TextView
-                            android:id="@+id/addRecent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:padding="15dp"
-                            android:text="ADD"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@android:color/white" />-->
-
                     </RelativeLayout>
 
                     <citzen.jbc.myapplication.design.ThreeTwoPager

@@ -49,6 +49,110 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389580507195:android:e70805fa4c499a9b",
+        "android_client_info": {
+          "package_name": "citzen.jbc.myapplication.student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389580507195-s0ntiht6aifaelg8rr16ivqrgrjgavbs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "citzen.jbc.myapplication.student",
+            "certificate_hash": "4f855d609700763df600a96e53d29569aaec2d0b"
+          }
+        },
+        {
+          "client_id": "389580507195-kp4ujifhal6utk7vvnmk4aof3qquvdb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "citzen.jbc.myapplication.student",
+            "certificate_hash": "0fda743814c08357d222d7a8b6f82e656e1e98fc"
+          }
+        },
+        {
+          "client_id": "389580507195-o91iru0m0s0q376558q4vjpp0ssbg8e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyS1yh7s54owuQlMwEnsu28YZXbyVyTzI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389580507195-o91iru0m0s0q376558q4vjpp0ssbg8e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389580507195:android:44544db2fa47aa17",
+        "android_client_info": {
+          "package_name": "citzen.jbc.myapplication.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389580507195-rndtth09ttkpfreqe6glr23km7k2vth7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "citzen.jbc.myapplication.admin",
+            "certificate_hash": "4f855d609700763df600a96e53d29569aaec2d0b"
+          }
+        },
+        {
+          "client_id": "389580507195-7nc1feu7jjfqcna1ohvdckjhehqlhk0r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "citzen.jbc.myapplication.admin",
+            "certificate_hash": "0fda743814c08357d222d7a8b6f82e656e1e98fc"
+          }
+        },
+        {
+          "client_id": "389580507195-o91iru0m0s0q376558q4vjpp0ssbg8e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyS1yh7s54owuQlMwEnsu28YZXbyVyTzI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389580507195-o91iru0m0s0q376558q4vjpp0ssbg8e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

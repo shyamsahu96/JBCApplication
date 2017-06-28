@@ -1,4 +1,4 @@
-package citzen.jbc.myapplication;
+package citzen.jbc.myapplication.student;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,14 +13,10 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import citzen.jbc.myapplication.R;
 import citzen.jbc.myapplication.design.ThreeTwoImageView;
 
-/**
- * Created by shyam on 17-Jun-17.
- */
-
 public class RecentEventsFragment extends Fragment {
-
     String photoLink, message, dataKey;
     View view;
 
@@ -46,17 +42,18 @@ public class RecentEventsFragment extends Fragment {
         setDataKey(getArguments().getString("dataKey"));
     }
 
-    public void setMessage(String message){
+    public void setMessage(String message) {
         tvRecent.setText(message);
-        Log.e("Message Set","true");
-    }
-    public void setPhotoLink(String photoLink){
-        Log.e("Photo Set","true");
-        Picasso.with(getActivity()).load(photoLink).placeholder(R.drawable.placeholder).into(ivRecent);
-    }
-    public void setDataKey(String dataKey){
-        this.dataKey=dataKey;
+        Log.e("Message Set", "true");
     }
 
+    public void setPhotoLink(String photoLink) {
+        Log.e("Photo Set", "true");
+        Picasso.with(getActivity()).load(photoLink).placeholder(R.drawable.placeholder).into(ivRecent);
+    }
+
+    public void setDataKey(String dataKey) {
+        this.dataKey = dataKey;
+    }
 
 }
