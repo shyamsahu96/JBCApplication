@@ -412,7 +412,7 @@ public class ActivityMain extends AppCompatActivity {
                 fetch_question();
                 break;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                finish();
                 break;
         }
         return true;
