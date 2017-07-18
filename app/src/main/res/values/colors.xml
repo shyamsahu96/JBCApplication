@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00675b</color>
-    <color name="colorAccent">#FFAB40</color>
+    <color name="colorAccent">#00E676</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="textColorSecondary">#ffffff</color>
 
@@ -16,4 +16,8 @@
     <color name="timerColor">#4CAF50</color>
 
     <color name="green400">#00E676</color>
+
+    <color name="colorBluePrimary">#2196f3</color>
+    <color name="colorBlueDark">#0069c0</color>
+    <color name="colorProfileAccent">#64ffda</color>
 </resources>

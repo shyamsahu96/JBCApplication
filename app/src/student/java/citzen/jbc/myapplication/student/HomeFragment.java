@@ -209,13 +209,11 @@ public class HomeFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            Log.e("Adapter Position", String.valueOf(position));
             return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            Log.e("Adapter Size", String.valueOf(fragments.size()));
             return fragments.size();
         }
 

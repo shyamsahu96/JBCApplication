@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -412,7 +411,7 @@ public class ActivityMain extends AppCompatActivity {
                 fetch_question();
                 break;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                finish();
                 break;
         }
         return true;

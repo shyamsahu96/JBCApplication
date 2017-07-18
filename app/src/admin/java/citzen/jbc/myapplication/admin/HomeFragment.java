@@ -42,7 +42,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import citzen.jbc.myapplication.R;
-import citzen.jbc.myapplication.admin.RecentEventsFragment;
 import citzen.jbc.myapplication.design.ThreeTwoPager;
 import citzen.jbc.myapplication.firebase.Recents;
 import id.zelory.compressor.Compressor;
@@ -86,14 +85,17 @@ public class HomeFragment extends Fragment {
         mRecentsReference = mDatabase.getReference(getString(R.string.recentevent));
         mStorage = FirebaseStorage.getInstance();
         mRecentsPhotosReference = mStorage.getReference(getString(R.string.recentevent));
-        readPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-        writePermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        readPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        writePermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+
+        if (!readPermission || !writePermission)
+            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSIONS);
         keys = new Vector<>();
         mRecentAdapter = new MyPagerAdapter(mActivity.getSupportFragmentManager());
 
@@ -151,43 +153,6 @@ public class HomeFragment extends Fragment {
         mRecentsReference.removeEventListener(mRecentEventListener);
         mRecentAdapter = null;
         keys.clear();
-    }
-
-    class MyPagerAdapter extends FragmentStatePagerAdapter {
-
-        ArrayList<RecentEventsFragment> fragments = new ArrayList<>();
-        ArrayList<String> message, photoLink;
-
-        MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Log.e("Adapter Position", String.valueOf(position));
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            Log.e("Adapter Size", String.valueOf(fragments.size()));
-            return fragments.size();
-        }
-
-        void addFragment(Recents recents) {
-            RecentEventsFragment fragment = new RecentEventsFragment();
-            Bundle args = new Bundle();
-            args.putString("message", recents.getMessage());
-            args.putString("photoLink", recents.getPhotoLink());
-            args.putString("dataKey", recents.getDataKey());
-            fragment.setArguments(args);
-            fragments.add(fragment);
-            Log.e("Fragment Added", "true");
-        }
-
-        void removeFragment(int position) {
-            fragments.remove(position);
-        }
     }
 
     @OnClick(R.id.addRecent)
@@ -271,5 +236,42 @@ public class HomeFragment extends Fragment {
                 Log.e("Allowed", "false");
         }
 
+    }
+
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        ArrayList<RecentEventsFragment> fragments = new ArrayList<>();
+        ArrayList<String> message, photoLink;
+
+        MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Log.e("Adapter Position", String.valueOf(position));
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            Log.e("Adapter Size", String.valueOf(fragments.size()));
+            return fragments.size();
+        }
+
+        void addFragment(Recents recents) {
+            RecentEventsFragment fragment = new RecentEventsFragment();
+            Bundle args = new Bundle();
+            args.putString("message", recents.getMessage());
+            args.putString("photoLink", recents.getPhotoLink());
+            args.putString("dataKey", recents.getDataKey());
+            fragment.setArguments(args);
+            fragments.add(fragment);
+            Log.e("Fragment Added", "true");
+        }
+
+        void removeFragment(int position) {
+            fragments.remove(position);
+        }
     }
 }

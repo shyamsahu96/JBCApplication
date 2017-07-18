@@ -6,12 +6,12 @@ package citzen.jbc.myapplication.firebase;
 
 public class FirebaseUserProfile {
 
-    public String name;
-    public String email;
-    public String college;
-    public String password;
-    public String referKey;
-    public int refPoints;
+    private String name;
+    private String email;
+    private String college;
+    private String password;
+    private String referKey;
+    private int refPoints;
 
     public FirebaseUserProfile() {
 

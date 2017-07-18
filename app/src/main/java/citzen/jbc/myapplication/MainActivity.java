@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity
         userName = (TextView) header.findViewById(R.id.navName);
         userEmail = (TextView) header.findViewById(R.id.navEmail);
         userImage = (CircleImageView) header.findViewById(R.id.profImageView);
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

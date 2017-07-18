@@ -44,7 +44,7 @@ import citzen.jbc.myapplication.firebase.FirebaseUserProfile;
 
 public class SignUpFragment extends Fragment {
 
-    final static String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+    public final static String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
     @BindView(R.id.etname)
     MaterialEditText etname;
     @BindView(R.id.etemail)
