@@ -31,6 +31,7 @@
             android:layout_height="96dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_account_circle"
+            android:transitionName="@string/imageTrans"
             app:border_color="@color/colorPrimary"
             app:border_overlay="true"
             app:border_width="3dp" />

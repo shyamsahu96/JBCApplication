@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,11 @@ import citzen.jbc.myapplication.firebase.Feed;
 
 public class FeedBackDialog extends DialogFragment {
 
+    static String LOG_TAG = "FEEDBACK DIALOG";
     View view;
     @BindView(R.id.metfeedtext)
     MaterialEditText feedText;
-    static String LOG_TAG = "FEEDBACK DIALOG";
+    FragmentActivity mActivity;
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mFeedReference;
@@ -46,42 +48,54 @@ public class FeedBackDialog extends DialogFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActivity = getActivity();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         if (mFirebaseDatabase == null)
             mFirebaseDatabase = FirebaseDatabase.getInstance();
         if (mFirebaseAuth == null)
             mFirebaseAuth = FirebaseAuth.getInstance();
-        mFeedReference = mFirebaseDatabase.getReference(getString(R.string.feedKey));
+        if (mFeedReference == null)
+            mFeedReference = mFirebaseDatabase.getReference(getString(R.string.feedKey));
 
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mFeedReference = null;
         mFirebaseDatabase = null;
         mFirebaseAuth = null;
+        mFeedReference = null;
     }
 
     @OnClick(R.id.btnFeedOk)
-    void takefeed() {
+    void takeFeed() {
         if (!feedText.isCharactersCountValid())
             return;
-        String feed = feedText.getText().toString();
+        String feed = feedText.getText().toString().trim();
         Feed myFeed = new Feed(mFirebaseAuth.getCurrentUser().getDisplayName(), feed);
         mFeedReference.push().setValue(myFeed).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                Toast.makeText(mActivity, "Thank you for your feedback", Toast.LENGTH_SHORT).show();
                 dismiss();
-                Toast.makeText(getActivity(), "Feedback Submitted Succesfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
                 dismiss();
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.btnFeedCancel)
+    void cancelFeed() {
+        dismiss();
     }
 }

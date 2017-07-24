@@ -59,6 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
     MaterialEditText metPass;
     @BindView(R.id.met_prof_email)
     MaterialEditText metEmail;
+    @BindView(R.id.met_prof_mob)
+    MaterialEditText metMobile;
     @BindView(R.id.cbPass)
     CheckBox cbPass;
     @BindView(R.id.activity_prof_img)
@@ -94,14 +96,15 @@ public class ProfileActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.saveProfile) {
 
             //Upload user details to the firebase.
-            if (!metName.isCharactersCountValid() || !metClg.isCharactersCountValid()) {
+            if (!metName.isCharactersCountValid() || !metClg.isCharactersCountValid() || !metMobile.isCharactersCountValid()) {
                 Snackbar.make(findViewById(R.id.activity_profile), "Invalid Credentials", Snackbar.LENGTH_SHORT).show();
                 return false;
             }
-            final String name, college, pass;
-            name = metName.getText().toString();
-            college = metClg.getText().toString();
-            pass = metPass.getText().toString();
+            final String name, college, pass, mobile;
+            name = metName.getText().toString().trim();
+            college = metClg.getText().toString().trim();
+            pass = metPass.getText().toString().trim();
+            mobile = metMobile.getText().toString().trim();
 
             if (!metPass.isCharactersCountValid() || !pass.matches(PASS_PATTERN)) {
                 Snackbar.make(findViewById(R.id.activity_profile), "Invalid Password Format", Snackbar.LENGTH_SHORT).show();
@@ -110,6 +113,7 @@ public class ProfileActivity extends AppCompatActivity {
             profile.setName(name);
             profile.setCollege(college);
             profile.setPassword(pass);
+            profile.setMobile(mobile);
             final ProgressDialog dialog = ProgressDialog.show(this, null, "Updating Your Profile...", false, false);
             mReference.setValue(profile).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -120,19 +124,20 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Snackbar.make(findViewById(R.id.activity_profile), "Profile Updated", Snackbar.LENGTH_SHORT).show();
-                            mFirebaseUser.updatePassword(pass).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Snackbar.make(findViewById(R.id.activity_profile), "Password Updated", Snackbar.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.e("Password Failure", e.getMessage());
-                                    Snackbar.make(findViewById(R.id.activity_profile), e.getMessage(), Snackbar.LENGTH_SHORT).show();
-                                    logoutandexit();
-                                }
-                            });
+                            if (cbPass.isChecked())
+                                mFirebaseUser.updatePassword(pass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Snackbar.make(findViewById(R.id.activity_profile), "Password Updated", Snackbar.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("Password Failure", e.getMessage());
+                                        Snackbar.make(findViewById(R.id.activity_profile), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                        logoutandexit();
+                                    }
+                                });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -198,6 +203,7 @@ public class ProfileActivity extends AppCompatActivity {
                 metClg.setText(profile.getCollege());
                 metEmail.setText(profile.getEmail());
                 metName.setText(profile.getName());
+                metMobile.setText(profile.getMobile());
             }
 
             @Override
@@ -262,6 +268,7 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         uploadDialog.dismiss();
+                        Snackbar.make(findViewById(R.id.activity_profile), "Profile photo updated", Snackbar.LENGTH_LONG).show();
                         Picasso.with(ProfileActivity.this).load(mFirebaseUser.getPhotoUrl()).placeholder(R.drawable.placeholder).error(android.R.drawable.stat_notify_error).into(profImg);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

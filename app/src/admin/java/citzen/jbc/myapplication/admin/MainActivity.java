@@ -1,10 +1,12 @@
 package citzen.jbc.myapplication.admin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -62,7 +64,8 @@ public class MainActivity extends AppCompatActivity
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, userImage, getString(R.string.imageTrans));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class), compat.toBundle());
             }
         });
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -74,6 +77,11 @@ public class MainActivity extends AppCompatActivity
                     Intent intent = new Intent(MainActivity.this, LogInActivity.class);
                     startActivityForResult(intent, RC_SIGN);
                 } else {
+                    if (!user.isEmailVerified()) {
+                        mFirebaseAuth.signOut();
+                        Toast.makeText(MainActivity.this, "E-mail verification required", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     mFirebaseAuth.getCurrentUser().reload().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -131,7 +139,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            }).setNegativeButton("No", null).setCancelable(true).setTitle("Exit").setMessage("Are you sure you want to exit?");
+            dialog.show();
         }
     }
 
@@ -199,7 +214,9 @@ public class MainActivity extends AppCompatActivity
         if (mFirebaseUser == null)
             mFirebaseUser = mFirebaseAuth.getCurrentUser();
         if (mFirebaseUser != null && mFirebaseUser.getPhotoUrl() != null)
-            Picasso.with(this).load(mFirebaseUser.getPhotoUrl()).into(userImage);
+            Picasso.with(this).load(mFirebaseUser.getPhotoUrl()).placeholder(R.drawable.ic_account_circle).into(userImage);
+        else
+            Picasso.with(this).load(R.drawable.ic_account_circle).into(userImage);
     }
 
     @Override

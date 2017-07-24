@@ -6,7 +6,7 @@ package citzen.jbc.myapplication.firebase;
 
 public class Feed {
 
-    private String name, feed;
+    public String name, feed;
 
     public Feed() {
 

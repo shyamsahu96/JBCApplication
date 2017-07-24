@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_vertical_margin">
+
+    <TextView
+        android:id="@+id/btimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="0 : 00"
+        android:textColor="@color/timerColor"
+        android:textSize="40sp" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@drawable/back_btn"
+        android:text="Submit"
+        android:textColor="@drawable/back_txt" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:onClick="next"
+        android:src="@drawable/ic_next" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/button2"
+        android:onClick="previous"
+        android:src="@drawable/ic_previous" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/btimer">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fquestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="No questions Loaded"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/questionColor" />
+
+            <RadioGroup
+                android:id="@+id/fchoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fquestion">
+
+                <RadioButton
+                    android:id="@+id/opa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="A"
+                    android:textColor="@color/radioColor" />
+
+                <RadioButton
+                    android:id="@+id/opb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="B"
+                    android:textColor="@color/radioColor" />
+
+                <RadioButton
+                    android:id="@+id/opc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="C"
+                    android:textColor="@color/radioColor" />
+
+                <RadioButton
+                    android:id="@+id/opd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="D"
+                    android:textColor="@color/radioColor" />
+            </RadioGroup>
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

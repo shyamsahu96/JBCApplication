@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_account_circle"
+                android:transitionName="@string/imageTrans"
                 app:layout_collapseMode="parallax" />
 
 
@@ -76,6 +77,20 @@
                     android:hint="Email"
                     app:met_checkCharactersCountAtBeginning="false"
                     app:met_minCharacters="5" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/met_prof_mob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile"
+                    app:met_checkCharactersCountAtBeginning="false"
+                    app:met_maxCharacters="10"
+                    app:met_minCharacters="10" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

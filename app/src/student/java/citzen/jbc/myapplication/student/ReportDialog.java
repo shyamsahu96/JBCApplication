@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +29,11 @@ import citzen.jbc.myapplication.firebase.Report;
 
 public class ReportDialog extends DialogFragment {
 
+    static String LOG_TAG = "REPORT DIALOG";
     View view;
     @BindView(R.id.metreporttext)
     MaterialEditText feedText;
-    static String LOG_TAG = "REPORT DIALOG";
+    FragmentActivity mActivity;
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mReportReference;
@@ -43,6 +45,12 @@ public class ReportDialog extends DialogFragment {
         view = inflater.inflate(R.layout.fragment_report, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActivity = getActivity();
     }
 
     @Override
@@ -65,7 +73,7 @@ public class ReportDialog extends DialogFragment {
     }
 
     @OnClick(R.id.btnReportOk)
-    void takereport() {
+    void takeReport() {
         if (!feedText.isCharactersCountValid())
             return;
         String feed = feedText.getText().toString();
@@ -73,16 +81,21 @@ public class ReportDialog extends DialogFragment {
         mReportReference.push().setValue(report).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                Toast.makeText(mActivity, "Report Submitted Succesfully", Toast.LENGTH_SHORT).show();
                 dismiss();
-                Toast.makeText(getActivity(), "Report Submitted Succesfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_SHORT).show();
                 dismiss();
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.btnReportCancel)
+    void cancelReport() {
+        dismiss();
     }
 
 }

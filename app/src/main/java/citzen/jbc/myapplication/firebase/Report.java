@@ -6,7 +6,7 @@ package citzen.jbc.myapplication.firebase;
 
 public class Report {
 
-    private String name, report;
+    public String name, report;
 
     public Report() {
 

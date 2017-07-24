@@ -18,6 +18,8 @@
         <item>DBMS</item>
         <item>Java</item>
     </string-array>
+    <string name="fopa"><u>Forgot Password ?</u></string>
+
 
     <string name="your_question">Your Question goes here</string>
 
@@ -40,4 +42,7 @@
         <item>@drawable/androidimglow</item>
         <item>@drawable/htmllow</item>
     </integer-array>
+
+    <string name="imageTrans">userImageTrans</string>
+
 </resources>
