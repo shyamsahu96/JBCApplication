@@ -46,6 +46,7 @@ import citzen.jbc.myapplication.design.ThreeTwoPager;
 import citzen.jbc.myapplication.firebase.Recents;
 import id.zelory.compressor.Compressor;
 
+import static citzen.jbc.myapplication.HomeFragment.map_uri;
 import static citzen.jbc.myapplication.admin.MainActivity.readPermission;
 import static citzen.jbc.myapplication.admin.MainActivity.writePermission;
 
@@ -273,5 +274,15 @@ public class HomeFragment extends Fragment {
         void removeFragment(int position) {
             fragments.remove(position);
         }
+    }
+
+    @OnClick(R.id.imgcitzen)
+    public void openMap() {
+        Uri mapUri = Uri.parse(map_uri);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null)
+            startActivity(mapIntent);
+        else
+            Toast.makeText(getActivity(), "Map functionality is not supported in your mobile.", Toast.LENGTH_SHORT).show();
     }
 }
