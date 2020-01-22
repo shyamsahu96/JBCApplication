@@ -36,10 +36,13 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import citzen.jbc.myapplication.R;
 import citzen.jbc.myapplication.design.ThreeTwoPager;
 import citzen.jbc.myapplication.firebase.Recents;
 import id.zelory.compressor.Compressor;
+
+import static citzen.jbc.myapplication.HomeFragment.map_uri;
 
 /**
  * Created by shyam on 18-May-17.
@@ -198,6 +201,16 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.imgcitzen)
+    public void openMap() {
+        Uri mapUri = Uri.parse(map_uri);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null)
+            startActivity(mapIntent);
+        else
+            Toast.makeText(getActivity(), "Map functionality is not supported in your mobile.", Toast.LENGTH_SHORT).show();
+    }
+
     class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         ArrayList<RecentEventsFragment> fragments = new ArrayList<>();
@@ -209,13 +222,11 @@ public class HomeFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            Log.e("Adapter Position", String.valueOf(position));
             return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            Log.e("Adapter Size", String.valueOf(fragments.size()));
             return fragments.size();
         }
 

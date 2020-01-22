@@ -6,17 +6,22 @@ package citzen.jbc.myapplication.firebase;
 
 public class FirebaseUserProfile {
 
-    public String name;
-    public String email;
-    public String college;
-    public String password;
-    public String referKey;
-    public int refPoints;
+    private String name, email, college, password, referKey, mobile;
+    private int refPoints;
 
     public FirebaseUserProfile() {
 
     }
 
+    public FirebaseUserProfile(String name, String email, String college, String password, String referKey, String mobile, int refPoints) {
+        this.name = name;
+        this.email = email;
+        this.college = college;
+        this.password = password;
+        this.referKey = referKey;
+        this.mobile = mobile;
+        this.refPoints = refPoints;
+    }
 
     public FirebaseUserProfile(String name, String email, String college, String pass, String refKey, int refPoints) {
         this.name = name;
@@ -25,6 +30,14 @@ public class FirebaseUserProfile {
         this.password = pass;
         this.referKey = refKey;
         this.refPoints = refPoints;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getName() {

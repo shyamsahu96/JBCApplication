@@ -39,6 +39,7 @@ import java.util.Vector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import citzen.jbc.myapplication.design.ThreeTwoPager;
 import citzen.jbc.myapplication.firebase.Recents;
 import id.zelory.compressor.Compressor;
@@ -51,8 +52,8 @@ import static citzen.jbc.myapplication.MainActivity.writePermission;
  */
 
 public class HomeFragment extends Fragment {
+    public static String map_uri = "geo:20.2969922,85.8203299?z=16";
     View view;
-
     @BindView(R.id.vp_home)
     ThreeTwoPager mRecentPhotos;
     MyPagerAdapter mRecentAdapter;
@@ -230,6 +231,16 @@ public class HomeFragment extends Fragment {
                 Log.e("Allowed", "false");
         }
 
+    }
+
+    @OnClick(R.id.imgcitzen)
+    public void openMap() {
+        Uri mapUri = Uri.parse(map_uri);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, mapUri);
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null)
+            startActivity(mapIntent);
+        else
+            Toast.makeText(getActivity(), "Map functionality is not supported in your mobile.", Toast.LENGTH_SHORT).show();
     }
 
     class MyPagerAdapter extends FragmentStatePagerAdapter {

@@ -16,12 +16,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.DetailAct" parent="AppTheme">
+    <!--<style name="AppTheme.DetailAct" parent="AppTheme">
         <item name="android:windowEnterTransition">@transition/detail_enter</item>
         <item name="android:windowExitTransition">@transition/detail_enter</item>
+    </style>-->
+
+    <style name="AppTheme.Profile" parent="AppTheme">
+        <item name="colorPrimary">@color/colorBluePrimary</item>
+        <item name="colorPrimaryDark">@color/colorBlueDark</item>
+        <item name="colorAccent">@color/colorProfileAccent</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -44,7 +45,7 @@ import citzen.jbc.myapplication.firebase.FirebaseUserProfile;
 
 public class SignUpFragment extends Fragment {
 
-    final static String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+    public final static String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
     @BindView(R.id.etname)
     MaterialEditText etname;
     @BindView(R.id.etemail)
@@ -57,8 +58,10 @@ public class SignUpFragment extends Fragment {
     MaterialEditText etpass;
     @BindView(R.id.etrepass)
     MaterialEditText etrepass;
+    @BindView(R.id.etmob)
+    MaterialEditText etmob;
 
-    String name, email, college, referid, pass, repass;
+    String name, email, college, referid, pass, repass, mob;
     String LOG_TAG = "SIGNUP";
     boolean referred;
 
@@ -147,6 +150,7 @@ public class SignUpFragment extends Fragment {
         referid = etreferid.getText().toString();
         pass = etpass.getText().toString();
         repass = etrepass.getText().toString();
+        mob = etmob.getText().toString();
 
         for (int i = 0; i < vUsers.size(); i++) {
             refferedUserProfile = vUsers.get(i);
@@ -159,26 +163,27 @@ public class SignUpFragment extends Fragment {
             }
         }
 
-        if (!etname.isCharactersCountValid()) {
+        if (!etname.isCharactersCountValid())
             return;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(etemail.getText().toString()).matches() || !etemail.isCharactersCountValid()) {
-            Toast.makeText(mActivity, "Invalid E-mail", Toast.LENGTH_SHORT).show();
+        else if (!Patterns.EMAIL_ADDRESS.matcher(etemail.getText().toString()).matches() || !etemail.isCharactersCountValid()) {
             etemail.setError("Invalid E-mail");
             return;
         }
         if (TextUtils.isEmpty(college)) {
-            Toast.makeText(mActivity, "Invalid College", Toast.LENGTH_SHORT).show();
             etcollege.setError("Invalid College");
             return;
         }
-        if (!etpass.isCharactersCountValid() || !etpass.getText().toString().matches(PASSWORD_PATTERN)) {
-            Toast.makeText(mActivity, "Invalid Password", Toast.LENGTH_SHORT).show();
+        if (!etpass.isCharactersCountValid() || !pass.matches(PASSWORD_PATTERN)) {
             etpass.setError("Invalid Password");
             return;
         }
         if (!etrepass.isCharactersCountValid() || !pass.equals(repass)) {
-            Toast.makeText(mActivity, "RePassword InValid", Toast.LENGTH_SHORT).show();
             etrepass.setError("InValid RePassword");
+            return;
+        }
+
+        if (!etmob.isCharactersCountValid()) {
+            etmob.setError("Invalid Mobile no");
             return;
         }
 
@@ -202,11 +207,11 @@ public class SignUpFragment extends Fragment {
                 mSignUpDialog.dismiss();
                 if (task.isSuccessful()) {
                     Log.e(LOG_TAG, "Successful");
-                    mActivity.setResult(Activity.RESULT_OK);
 
                     UserProfileChangeRequest mChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                     final FirebaseUser user = mFirebaseAuth.getCurrentUser();
                     if (user != null) {
+
                         mUserUpdateDialog = ProgressDialog.show(mActivity, null, "Setting up Your Account", false, false);
                         user.updateProfile(mChangeRequest).
                                 addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -223,7 +228,6 @@ public class SignUpFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 mUserUpdateDialog.dismiss();
-                                mActivity.finish();
                             }
                         });
                     }
@@ -232,7 +236,51 @@ public class SignUpFragment extends Fragment {
         });
     }
 
-    private void setUpUserDataBase(FirebaseUser user) {
+    private void sendEmail(FirebaseUser user) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Sign up success!").setMessage("Please verify your email " + email + " and login to continue").setPositiveButton("Ok", null);
+
+        final ProgressDialog dialog = ProgressDialog.show(getActivity(), null, "Sending verification E-mail", false, false);
+
+        if (!user.isEmailVerified()) {
+            user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    dialog.dismiss();
+                    builder.show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    dialog.dismiss();
+                    builder.setMessage(e.getMessage()).show();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(Task task) {
+                    if (task.isSuccessful()) {
+                        mFirebaseAuth.signOut();
+                        etname.setText("");
+                        etemail.setText("");
+                        etcollege.setText("");
+                        etreferid.setText("");
+                        etpass.setText("");
+                        etrepass.setText("");
+                        etmob.setText("");
+                        etmob.clearValidators();
+                        etrepass.clearValidators();
+                        etpass.clearValidators();
+                        etcollege.clearValidators();
+                        etemail.clearValidators();
+                        etname.clearValidators();
+
+                    }
+                }
+            });
+        }
+    }
+
+    private void setUpUserDataBase(final FirebaseUser user) {
         //TO-DO list
         /*
         1-create a unique referral key for user by combining name and a random no
@@ -244,11 +292,16 @@ public class SignUpFragment extends Fragment {
         Log.e("Referral key", refKey);
 
         DatabaseReference mUserRef = mFirebaseDatabase.getReference().child("users").child(user.getUid());
-        FirebaseUserProfile mProfile = new FirebaseUserProfile(name, email, college, pass, refKey, referred ? 100 : 0);
+        FirebaseUserProfile mProfile = new FirebaseUserProfile(name, email, college, pass, refKey, mob, referred ? 100 : 0);
         mUserRef.setValue(mProfile).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                sendEmail(user);
             }
         });
         if (referred) {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_questions"
+            android:icon="@drawable/ic_question_answer_black_24dp"
+            android:title="Questions" />
+        <item
+            android:id="@+id/nav_notices"
+            android:icon="@drawable/ic_notifications_active_black_24dp"
+            android:title="Notices" />
+        <item
+            android:id="@+id/nav_users"
+            android:icon="@drawable/ic_users"
+            android:title="Users" />
+
+    </group>
+    <item android:title="Assess YourSelf">
+        <menu>
+            <item
+                android:id="@+id/nav_take_test"
+                android:icon="@drawable/ic_airline_seat_recline_normal_black_24dp"
+                android:title="Take a test" />
+        </menu>
+
+    </item>
+    <item android:title="Report and Feedback">
+        <menu>
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback_black_24dp"
+                android:title="Feedback" />
+            <item
+                android:id="@+id/nav_report"
+                android:icon="@drawable/ic_bug_report_black_24dp"
+                android:title="Report a Bug" />
+        </menu>
+    </item>
+
+    <item android:title="Sign out">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Sign out" />
+        </menu>
+    </item>
+
+</menu>

@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity
         userName = (TextView) header.findViewById(R.id.navName);
         userEmail = (TextView) header.findViewById(R.id.navEmail);
         userImage = (CircleImageView) header.findViewById(R.id.profImageView);
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -153,6 +159,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragReplace, new HomeFragment()).commit();
             mFirebaseAuth.signOut();
         } else if (id == R.id.nav_take_test)
             startActivity(new Intent(this, ActivityMain.class));

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JBC Application</string>
+    <string name="app_name">JBC</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -18,6 +18,8 @@
         <item>DBMS</item>
         <item>Java</item>
     </string-array>
+    <string name="fopa"><u>Forgot Password ?</u></string>
+
 
     <string name="your_question">Your Question goes here</string>
 
@@ -25,6 +27,8 @@
 
     <string name="questionsKey">questions</string>
     <string name="repliesKey">replies</string>
+    <string name="feedKey">feedbacks</string>
+    <string name="reportKey">bugreports</string>
 
     <string name="sharetrans">Shared</string>
     <string name="userKey">users</string>
@@ -38,4 +42,7 @@
         <item>@drawable/androidimglow</item>
         <item>@drawable/htmllow</item>
     </integer-array>
+
+    <string name="imageTrans">userImageTrans</string>
+
 </resources>
